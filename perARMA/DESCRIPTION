@@ -1,0 +1,21 @@
+Package: perARMA
+Type: Package
+Title: Periodic Time Series Analysis
+Version: 1.7
+Authors@R: c(
+    person("Anna", "Dudek", role="aut"),
+    person("Harry", "Hurd", role="aut"),
+    person("Wioletta", "Wojtowicz", role="aut"),
+    person("Karolina", "Marek", email="karolina.marek10@gmail.com", role=c("cre")))
+Maintainer: Karolina Marek <karolina.marek10@gmail.com>
+Description: Identification, model fitting and estimation for time series with periodic structure.
+    Additionally procedures for simulation of periodic processes
+    and real data sets are included.
+License: GPL (>= 2.0)
+LazyData: TRUE
+Imports: corpcor, gnm, matlab, Matrix, signal, stats
+RoxygenNote: 5.0.1
+NeedsCompilation: no
+Packaged: 2016-02-25 20:25:36 UTC; LENOVO
+Repository: CRAN
+Date/Publication: 2016-02-25 22:49:40

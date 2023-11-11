@@ -87,7 +87,6 @@ y=makeparma_out$y
 
 ############### parma_ident use
 
-#parma_ident(t(y),T,NaN,descriptor,outdir=tempfile("PARMA21_ident"))
-
+parma_ident(t(y),T,NaN,descriptor,outdir=tempdir())
 }
 

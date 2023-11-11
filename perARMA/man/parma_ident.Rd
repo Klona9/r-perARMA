@@ -86,7 +86,8 @@ makeparma_out<-makeparma(nlen,phi0,theta0,del0)
 y=makeparma_out$y
 
 ############### parma_ident use
-parma_ident(t(y),T,NaN,descriptor,outdir='PARMA21del1_ident')
+
+#parma_ident(t(y),T,NaN,descriptor,outdir=tempfile("PARMA21_ident"))
 
 }
 

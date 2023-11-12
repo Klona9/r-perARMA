@@ -62,12 +62,12 @@ Harry Hurd
 \examples{
 ## Do not run 
 ## It could take a few seconds
+\donttest{
+data(volumes)
+pmean<-permest(t(volumes),24, 0.05, NaN,'volumes', pp=0)
+xd=pmean$xd
+estimators<-perYW(volumes,24,2,NaN)
 
-#data(volumes)
-#pmean<-permest(t(volumes),24, 0.05, NaN,'volumes', pp=0)
-#xd=pmean$xd
-#estimators<-perYW(volumes,24,2,NaN)
-
-#parmaresid(xd, 0, estimators$del, estimators$phi)
-
+parmaresid(xd, 0, estimators$del, estimators$phi)
+}
 }

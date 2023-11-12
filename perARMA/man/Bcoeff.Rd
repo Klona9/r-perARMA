@@ -22,14 +22,14 @@ coefficients \eqn{ a_{k}(\tau)} which satisfy
  for all required lags \eqn{ \tau} and  \eqn{k}.
 }
 \usage{
-Bcoeff(x, T, tau, missval, datastr,...)
-Bcoeffa(x, T, tau, missval, datastr,...)
+Bcoeff(x, T_t, tau, missval, datastr,...)
+Bcoeffa(x, T_t, tau, missval, datastr,...)
 }
 \arguments{
   \item{x}{
 input time series.
 }
-  \item{T}{
+  \item{T_t}{
 period length of PC-T structure.
 }
   \item{tau}{

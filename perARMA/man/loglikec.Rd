@@ -23,7 +23,7 @@ vector of parameters for PARMA(p,q) model, containing matrix parameters
 input time series.
 }
   \item{conpars}{vector of parameters \code{[T, p, q, stype]},\cr
- \code{T} period of PC-T structure,\cr
+ \code{T_t} period of PC-T structure,\cr
  \code{p, q} maximum PAR and PMA order, respectively,\cr
  \code{stype}  numeric parameter connected with covariance matrix computation, so far should be equal to 0 to use procedure
 \code{R_w_ma} (see \code{R_w_ma} description). In the future also other values of \code{stype} will be available for
@@ -77,13 +77,14 @@ Harry Hurd
 \examples{
 ## Do not run
 ## It could take a few seconds
-
-#data(volumes)
-#pmean<-permest(t(volumes),24, 0.05, NaN,'volumes', pp=0)
-#xd=pmean$xd
-#estimators<-perYW(volumes,24,2,NaN)
-#estvec=c(estimators$phi[,1],estimators$phi[,2],estimators$del)
-#loglikec(estvec,xd,c(24,2,0,0))
+\donttest{
+data(volumes)
+pmean<-permest(t(volumes),24, 0.05, NaN,'volumes', pp=0)
+xd=pmean$xd
+estimators<-perYW(volumes,24,2,NaN)
+estvec=c(estimators$phi[,1],estimators$phi[,2],estimators$del)
+loglikec(estvec,xd,c(24,2,0,0))
+}
 }
 \keyword{Likehood}
 \keyword{AIC}

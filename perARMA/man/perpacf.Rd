@@ -15,7 +15,7 @@ so we can represent \eqn{\pi(t,n)} by its Fourier coefficients.\cr
 Function \code{ppfplot} plots perpacf coefficients returned by \code{perpacf} as function of \code{n} for each specified lag \eqn{t=1, 2,\ldots, T}.
 }
 \usage{
-perpacf(x, T, p, missval)
+perpacf(x, T_t, p, missval)
 ppfcoeffab(ppf, nsamp, printflg, datastr)
 ppfplot(ppf, nsamp, alpha, datastr)
 }
@@ -23,7 +23,7 @@ ppfplot(ppf, nsamp, alpha, datastr)
   \item{x}{
 input time series.
 }
-  \item{T}{
+  \item{T_t}{
 period of PC-T structure.
 }
   \item{p}{

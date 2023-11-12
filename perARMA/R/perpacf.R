@@ -1,14 +1,14 @@
 perpacf <-
-function(x,T,p,missval){
+function(x,T_t,p,missval){
        CTHRES=10^6
        ZTHRS=.Machine$double.eps*10
        nx=length(x)
-         ppa=matrix(0,T,p+1)
-         C=matrix(0,T,p+1)
-         Splus=matrix(1,T,p+1)
-         Sminus=matrix(1,T,p+1)
-         nsamp=matrix(0,T,p+1)
-         pmean=matrix(0,T,1)
+         ppa=matrix(0,T_t,p+1)
+         C=matrix(0,T_t,p+1)
+         Splus=matrix(1,T_t,p+1)
+         Sminus=matrix(1,T_t,p+1)
+         nsamp=matrix(0,T_t,p+1)
+         pmean=matrix(0,T_t,1)
          pmean1=matrix(0,nx,1)
 
 
@@ -21,8 +21,8 @@ function(x,T,p,missval){
             imissx=x[x==missval]
              x[imissx]=NaN}
 
-       for (t in 1:T)
-         {index=seq(t,nx,T)
+       for (t in 1:T_t)
+         {index=seq(t,nx,T_t)
           z=x[index]
           z1=na.omit(z)
           pmean[t]=mean(z1)
@@ -30,17 +30,17 @@ function(x,T,p,missval){
 
           xd=x-t(pmean1)
 
-       for (t in 1:T)
+       for (t in 1:T_t)
          {baseind=seq(t,t-1,-1)
           while (min(baseind) <= 0)
-         {baseind=baseind+T}
+         {baseind=baseind+T_t}
 
-         inum=floor((nx-baseind)/T)+1
+         inum=floor((nx-baseind)/T_t)+1
          inummin=min(inum)
-         yt=xd[seq(baseind[1],nx,T)]
+         yt=xd[seq(baseind[1],nx,T_t)]
          yt=yt[1:inummin]
 
-         ytminus1=xd[seq(baseind[2],nx,T)]
+         ytminus1=xd[seq(baseind[2],nx,T_t)]
          ytminus1=ytminus1[1:inummin]
          nsamp[t,1]=inummin
 
@@ -55,21 +55,21 @@ function(x,T,p,missval){
          ralpha=matrix(0,p,1)
          rbeta=matrix(0,p,1)
          for (n in 1:p)
-           { for (t in 1:T)
+           { for (t in 1:T_t)
               { baseind=seq(t+1,t-n,-1)
                 while (min(baseind) <= 0)
-               { baseind=baseind+T}
+               { baseind=baseind+T_t}
 
-               inum=floor((nx-baseind)/T)+1
+               inum=floor((nx-baseind)/T_t)+1
                inummin=min(inum)
-               ytplus1=xd[seq(baseind[1],nx,T)]
-               ytminus=xd[seq(baseind[n+2],nx,T)]
+               ytplus1=xd[seq(baseind[1],nx,T_t)]
+               ytminus=xd[seq(baseind[n+2],nx,T_t)]
                ytplus1=ytplus1[1:inummin]
                ytminus=ytminus[1:inummin]
                y=matrix(0,inummin,n)
 
         for (s in 1:n)
-            { isamp=seq(baseind[s+1],nx,T)
+            { isamp=seq(baseind[s+1],nx,T_t)
               isamp=isamp[1:inummin]
               y[,s]=xd[isamp]
               ralpha[s]=base::sum(na.omit(ytplus1%*%y[,s]))/inummin

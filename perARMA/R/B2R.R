@@ -1,7 +1,7 @@
 B2R <-
 function(B,n) {
 
-      T=nrow(B)    
+      T_t=nrow(B)    
       tau1=ncol(B)
   
     if (nargs()<2)
@@ -9,13 +9,13 @@ function(B,n) {
          } else {
         side=min(n,tau1)}
   
-      nT=floor((side-1)/T)+1
+      nT=floor((side-1)/T_t)+1
    
-      Bex=matrix(0,(T*nT),tau1)
-      Bex[1:T,]=B
+      Bex=matrix(0,(T_t*nT),tau1)
+      Bex[1:T_t,]=B
    
     if (nT>1) 
-       { for (n in 2:nT) { Bex[((n-1)*T+1):(n*T),]=B }  }
+       { for (n in 2:nT) { Bex[((n-1)*T_t+1):(n*T_t),]=B }  }
   
       diags1<-list(Bex[1:side,1])    
       R = Matrix::bandSparse(length(Bex[1:side,1]), k = 0, diag = diags1)

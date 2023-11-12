@@ -95,6 +95,7 @@ Westfall, P. H., Young, S. S. (1993), Resampling-Based Multiple Testing: Example
  for p-Value Adjustment, Wiley Series in Probability and Statistics.
 
 }
+\value{No return value, called for side effects}
 \author{
 Harry Hurd
 }

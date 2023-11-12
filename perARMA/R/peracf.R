@@ -1,16 +1,16 @@
-peracf<-function (x, T, tau, missval, datastr, ...)
+peracf<-function (x, T_t, tau, missval, datastr, ...)
 {
-    peracf_full <- function(x, T, tau, missval, datastr, prttaus,
+    peracf_full <- function(x, T_t, tau, missval, datastr, prttaus,
         plottaus, cialpha, typeci, typerho, pchci, pchrho, colci,
         colrho) {
         nx = length(x)
         pmean1 <- matrix(0, nx, 1)
-        pmean <- matrix(0, T, 1)
-        numper = floor(nx/T)
+        pmean <- matrix(0, T_t, 1)
+        numper = floor(nx/T_t)
         numtau = length(tau)
-        B <- matrix(0, T, numtau)
-        Rho <- matrix(0, T, numtau)
-        nsamp <- matrix(0, T, numtau)
+        B <- matrix(0, T_t, numtau)
+        Rho <- matrix(0, T_t, numtau)
+        nsamp <- matrix(0, T_t, numtau)
         if (is.nan(missval)) {
             missisnan = 1
             imissx = x[(is.nan(x))]
@@ -20,24 +20,24 @@ peracf<-function (x, T, tau, missval, datastr, ...)
             imissx = x[x == missval]
             x[imissx] = NaN
         }
-        for (t in 1:T) {
-            index <- seq(t, nx, T)
+        for (t in 1:T_t) {
+            index <- seq(t, nx, T_t)
             z = x[index]
             zomit = na.omit(z)
             pmean[t] = mean(zomit)
             pmean1[index] = pmean[t]
         }
         xd = x - t(pmean1)
-        for (t in 1:T) {
-            indt = seq(t, nx, T)
+        for (t in 1:T_t) {
+            indt = seq(t, nx, T_t)
             for (k in 1:numtau) {
                 lag = tau[k]
-                indtt = seq(t + lag, nx, T)
+                indtt = seq(t + lag, nx, T_t)
                 if (t + lag) {
                   mfirst = 1
                 }
                 else {
-                  mfirst = 2 - fix((t + lag)/T)
+                  mfirst = 2 - fix((t + lag)/T_t)
                 }
                 indt = indt[mfirst:length(indt)]
                 indtt = indtt[mfirst:length(indtt)]
@@ -67,8 +67,8 @@ peracf<-function (x, T, tau, missval, datastr, ...)
                 lag = tau[k]
                 if (is.element(lag, union(prttaus, plottaus)) &
                   !lag == 0) {
-                  lower <- matrix(NaN, T, 1)
-                  upper <- matrix(NaN, T, 1)
+                  lower <- matrix(NaN, T_t, 1)
+                  upper <- matrix(NaN, T_t, 1)
                   inotnan = !is.nan(B[, k])
                   ibigenuf = as.logical(nsamp[, k] > 3)
                   iuse = as.logical(inotnan * ibigenuf)
@@ -91,14 +91,14 @@ peracf<-function (x, T, tau, missval, datastr, ...)
                   mzscore <- rzt$mzscore
                   ngood <- rzt$ngood
 
-                  cat(paste("\n"))
+                  message(paste("\n"))
 
 
-                 cat(paste("lag=", tau[k],"\n"))
+                 message(paste("lag=", tau[k],"\n"))
                  detail <- matrix(c(equalchi2,mzscore,equalpv,zeropv),ncol=2)
                  colnames(detail) <- c("test", "pv")
                  rownames(detail)<-c("rho(t+lag,t)=rho(lag), chi2 =", "rho(t+lag,t)=0, mzscore = ")
-                 print(detail)
+                 message(detail)
                  saveequalpv=c(saveequalpv,equalpv)
                  savezeropv=c(savezeropv,zeropv)
 
@@ -107,17 +107,17 @@ peracf<-function (x, T, tau, missval, datastr, ...)
 
                  detail <- matrix(c(Rho[, k],rhoci[, 1],rhoci[, 2],nsamp[, k]),ncol=4)
                  colnames(detail) <- c("rho(t,lag)", "lower", "upper", "nsamp")
-                 row.names(detail)<-paste("t=",seq(1,T), sep="")
-                 print(detail)
+                 row.names(detail)<-paste("t=",seq(1,T_t), sep="")
+                 message(detail)
                     }
 
 
                   if (is.element(lag, plottaus)) {
                     dev.set(which = 1)
-                    matplot(seq(1, T), rhoci, xlab = "time t",
+                    matplot(seq(1, T_t), rhoci, xlab = "time t",
                       ylab = "rho(t,lag)", type = typeci, lwd = 1,
                       lty = 4, col = colci, pch = pchci, new = TRUE)
-                    points(seq(1, T), Rho[, k], type = typerho,
+                    points(seq(1, T_t), Rho[, k], type = typerho,
                       lwd = 2, lty = 4, col = colrho, pch = pchrho,
                       new = TRUE)
                     legend("bottom", c("coefficients", "confidence intervals"),
@@ -141,20 +141,20 @@ peracf<-function (x, T, tau, missval, datastr, ...)
             if (nmsavezeropv >= 1) {
                 nmsavezeropv = 1
             }
-            cat(paste("\n"))
-            cat(paste("least equalpv bonferroni corrected for",
+            message(paste("\n"))
+            message(paste("least equalpv bonferroni corrected for",
                 nbf, " lags tried:", nmsaveequalpv, "\n"))
-            cat(paste("least equalpv bonferroni corrected for",
+            message(paste("least equalpv bonferroni corrected for",
                 nbf, " lags tried:", nmsavezeropv, "\n"))
         }
         result = list(B = B, Rho = Rho, nsamp = nsamp)
         class(result) = "peracf"
         result
     }
-    L <- modifyList(list(prttaus = seq(1, T/2), plottaus = seq(1,
-        T/2), cialpha = 0.05, typeci = "b", typerho = "b", pchci = 10,
+    L <- modifyList(list(prttaus = seq(1, T_t/2), plottaus = seq(1,
+        T_t/2), cialpha = 0.05, typeci = "b", typerho = "b", pchci = 10,
         pchrho = 15, colci = "blue", colrho = "red"), list(x = x,
-        T = T, tau = tau, missval = missval, datastr = datastr,
+        T_t = T_t, tau = tau, missval = missval, datastr = datastr,
         ...))
     do.call(peracf_full, L)
 }

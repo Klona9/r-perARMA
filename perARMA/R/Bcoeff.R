@@ -1,11 +1,11 @@
-Bcoeff<-function (x, T, tau, missval, datastr, ...)
+Bcoeff<-function (x, T_t, tau, missval, datastr, ...)
 {
-    Bcoeff_full <- function(x, T, tau, missval, datastr, printflg,
+    Bcoeff_full <- function(x, T_t, tau, missval, datastr, printflg,
         meth) {
-        nout = floor((T + 2)/2)
+        nout = floor((T_t + 2)/2)
         nx = length(x)
         pmean1 <- matrix(0, nx, 1)
-        pmean <- matrix(0, T, 1)
+        pmean <- matrix(0, T_t, 1)
         numtau = length(tau)
         Bkhat <- matrix(0, nout, numtau)
         Rhokhat <- matrix(0, nout, numtau)
@@ -23,8 +23,8 @@ Bcoeff<-function (x, T, tau, missval, datastr, ...)
             imissx = x[x == missval]
         }
         nmissx = length(imissx)
-        for (i in 1:T) {
-            index = seq(i, nx, T)
+        for (i in 1:T_t) {
+            index = seq(i, nx, T_t)
             z = x[index]
             if (missisnan) {
                 igood = which(!is.nan(z))
@@ -46,8 +46,8 @@ Bcoeff<-function (x, T, tau, missval, datastr, ...)
             indt = seq(1, (nx - alag))
             indtt = seq((1 + alag), nx)
             corlen = length(indt)
-            ncorper = floor(corlen/T)
-            ncor = ncorper * T
+            ncorper = floor(corlen/T_t)
+            ncor = ncorper * T_t
             nsamp[k] = ncor
             indt = indt[1:ncor]
             indtt = indtt[1:ncor]
@@ -90,7 +90,7 @@ Bcoeff<-function (x, T, tau, missval, datastr, ...)
                     n1[kk, k] = 1
                   }
                   else {
-                    if (T%%2 == 0 & kk == length(kindex)) {
+                    if (T_t%%2 == 0 & kk == length(kindex)) {
                       center = kk * ncorper
                       kgood = seq((center - half), (center -
                         1))
@@ -114,13 +114,13 @@ Bcoeff<-function (x, T, tau, missval, datastr, ...)
         }
         if (printflg) {
             for (k in 1:numtau) {
-                 cat(paste("\n"))
-                 cat(paste("Bcoeffs for", datastr, "lag=", tau[k],"\n"))
+                 message(paste("\n"))
+                 message(paste("Bcoeffs for", datastr, "lag=", tau[k],"\n"))
 
                 detail <- matrix(c(Re(Bkhat[,k]), Im(Bkhat[,k]), n1[,k], n2[,k], fratio[,k],pvec[,k]),ncol=6)
                 colnames(detail) <- c( "reB_k"," imB_k ", "n1", "n2", "Fratio", "pv")
                 row.names(detail)<-paste("k=",seq(0,(length(kindex)-1)), sep="")
-                print(detail)
+                message(detail)
            }
         }
         result = list(Bkhat = Bkhat, nsamp = nsamp, n1 = n1,
@@ -129,7 +129,7 @@ Bcoeff<-function (x, T, tau, missval, datastr, ...)
         result
     }
     L <- modifyList(list(printflg = 1, meth = 0), list(x = x,
-        T = T, tau = tau, missval = missval, datastr = datastr,
+        T_t = T_t, tau = tau, missval = missval, datastr = datastr,
         ...))
     do.call(Bcoeff_full, L)
 }

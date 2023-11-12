@@ -67,6 +67,7 @@ acfpacf<-function (x, nac, npac, datastr, ...)
             lines(seq(0, (npac - 1)), pconfmh[, 2], col = thrmhcol)
             title(paste("Usual PACF of", datastr, " for n=", nx, "alpha =  ",
                 pacalpha))
+            par(mfrow = c(1, 1))
         }
     }
     L <- modifyList(list(plfg = 1, acalpha = 0.05, pacalpha = 0.05,

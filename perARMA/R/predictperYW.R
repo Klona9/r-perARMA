@@ -1,7 +1,7 @@
-predictperYW <-function(x,T,p,missval,start,...)
+predictperYW <-function(x,T_t,p,missval,start,...)
 {
-   predictperYW_full <- function(x, T, p, missval, start, end ,realcol, predcol)
-   {    estimators <- perYW(x, T, p, missval) 	
+   predictperYW_full <- function(x, T_t, p, missval, start, end ,realcol, predcol)
+   {    estimators <- perYW(x, T_t, p, missval) 	
         phi = estimators$phi			
         phi = as.matrix(phi)
 
@@ -11,10 +11,10 @@ predictperYW <-function(x,T,p,missval,start,...)
 
 if (start<lim)                                
     {for(i in start:end)
-      {  if (i%%T==0) {xp[i]=phi[T,]%*%x[(i-1):(i-p)]
+      {  if (i%%T_t==0) {xp[i]=phi[T_t,]%*%x[(i-1):(i-p)]
                        x[i]=xp[i]    }
                        else
-                       {xp[i]=phi[i%%T,]%*%x[(i-1):(i-p)]
+                       {xp[i]=phi[i%%T_t,]%*%x[(i-1):(i-p)]
                        x[i]=xp[i]    }
     }
     plot(old[start:end], type="l", col="red",xlab="time",ylab="series after removing periodic mean")  
@@ -26,10 +26,10 @@ if (start<lim)
    } else {
    for(i in lim:start)
       { 
-       if (i%%T==0) {xp[i]=phi[T,]%*%x[(i-1):(i-p)]
+       if (i%%T_t==0) {xp[i]=phi[T_t,]%*%x[(i-1):(i-p)]
                      x=c(x,xp[i])}
                      else 
-                 {   xp[i]=phi[i%%T,]%*%x[(i-1):(i-p)]
+                 {   xp[i]=phi[i%%T_t,]%*%x[(i-1):(i-p)]
                      x=c(x,xp[i])
                   }
       }
@@ -45,6 +45,6 @@ if (start<lim)
    class(result) = "predictperYW"
    result
   }
-    L <- modifyList(list(end=end,realcol = "blue", predcol = "red"), list(x = x, T = T, p = p, missval=missval, start=start, ...))
+    L <- modifyList(list(end=end,realcol = "blue", predcol = "red"), list(x = x, T_t = T_t, p = p, missval=missval, start=start, ...))
     do.call(predictperYW_full, L)
 }

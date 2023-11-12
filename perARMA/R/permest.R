@@ -1,10 +1,10 @@
-permest <-function(x,T,alpha,missval,datastr,...){
+permest <-function(x,T_t,alpha,missval,datastr,...){
 
- permest_full<-function(x,T,alpha,missval,datastr,typeci,typepmean,pchci,pchpmean,colci,colpmean,pp)
+ permest_full<-function(x,T_t,alpha,missval,datastr,typeci,typepmean,pchci,pchpmean,colci,colpmean,pp)
  {
        nx=length(x)
-       nper = floor (nx/T)
-       nxact=nper*T
+       nper = floor (nx/T_t)
+       nxact=nper*T_t
        nrem=nx-nxact
        if ( nrem>0) {nper=nper+1}
 
@@ -20,23 +20,23 @@ permest <-function(x,T,alpha,missval,datastr,...){
 
 
       pmean1<-matrix(0,nx,1)
-      pmean<-matrix(0,T,1)
-      pstd<-matrix(0,T,1)
-      ny<-matrix(0,T,1)
-      pmci<-matrix(0,T,2)
+      pmean<-matrix(0,T_t,1)
+      pstd<-matrix(0,T_t,1)
+      ny<-matrix(0,T_t,1)
+      pmci<-matrix(0,T_t,2)
 
       bigz=c()
       groupz=c()
-      X=NaN*matrix(1,nper,T)
+      X=NaN*matrix(1,nper,T_t)
 
     if (pp)
      {
-      cat(paste('found ',nper,' periods of length ',T,' with remainder of ',nrem,'\n'))
+      message(paste('found ',nper,' periods of length ',T_t,' with remainder of ',nrem,'\n'))
      }
 
      vimiss<-c()
-     for (i in 1:T)
-     {  index=seq(i,nx,T)
+     for (i in 1:T_t)
+     {  index=seq(i,nx,T_t)
                z=x[index]
                if (missisnan)
               { igood=which(!is.nan(z))
@@ -75,8 +75,8 @@ permest <-function(x,T,alpha,missval,datastr,...){
   if (pp)
      { detail <- matrix(c(ny,vimiss,pmean,pmci[,1], pmci[,2]),ncol=5)
        colnames(detail) <- c(" ngood", "nmiss"," pmean ", "lower", "upper")
-       row.names(detail)<-paste("i=",seq(1,T), sep="")
-       print(detail) }
+       row.names(detail)<-paste("i=",seq(1,T_t), sep="")
+       message(detail) }
 
     xd=t(x)-pmean1
 
@@ -96,7 +96,7 @@ permest <-function(x,T,alpha,missval,datastr,...){
     result
 }
 
-L<-modifyList(list(typeci="o",typepmean="b",pchci=10,pchpmean=15,colci="red",colpmean="blue",pp=1), list(x = x, T=T, alpha=alpha, missval=missval, datastr=datastr,...))
+L<-modifyList(list(typeci="o",typepmean="b",pchci=10,pchpmean=15,colci="red",colpmean="blue",pp=1), list(x = x, T_t=T_t, alpha=alpha, missval=missval, datastr=datastr,...))
 
  do.call(permest_full,L)
 

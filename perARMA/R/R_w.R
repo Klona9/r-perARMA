@@ -1,11 +1,11 @@
 R_w <-
 function(theta,phi,nlen){
 
-       T=nrow(theta)
+       T_t=nrow(theta)
        q=ncol(theta) 
   
     if (length(phi)>1)                         
-       {T=nrow(phi)
+       {T_t=nrow(phi)
        p=ncol(phi)   
        } else {
         p=0}                             
@@ -17,15 +17,15 @@ function(theta,phi,nlen){
     del2=del*del                               
     q=q-1                                       
     lag=max(p,q)                                
-    side=(lag+1)*T                              
+    side=(lag+1)*T_t                              
  
        d=matrix(1,side,1)
        A = Matrix::bandSparse(side, k = 0, diag = list(d))
        A= as.matrix(A)
 
     for (tau in 0:lag)
-    {for (s in 1:T)                         
-       { row=s+tau*T
+    {for (s in 1:T_t)                         
+       { row=s+tau*T_t
          for (j in 1:p)                                                  
             {i1=s-j
              i2=s-tau
@@ -34,37 +34,37 @@ function(theta,phi,nlen){
                 i2=i1
                 i1=itemp}
             
-            good1=matlab::mod(i1-1,T)+1       
+            good1=matlab::mod(i1-1,T_t)+1       
             nT=good1-i1                     
             good2=i2+nT                       
             idiff=good1-good2
-            col=good1+T*idiff
+            col=good1+T_t*idiff
             A[row,col]=-phi[s,j]}
         }
       }
         
  
-    B_x_xi<-matrix(0,T,lag+1) 
+    B_x_xi<-matrix(0,T_t,lag+1) 
     B_x_xi[,1]=theta[,1]                           
     Rold=theta[,1]  
 
         if (q>1)
           {   for (tau in 1:q) 
-          {d=matrix(1,T*(tau+1),1)
-           B = Matrix::bandSparse(T*(tau+1), k = 0, diag = list(d))
+          {d=matrix(1,T_t*(tau+1),1)
+           B = Matrix::bandSparse(T_t*(tau+1), k = 0, diag = list(d))
            B= as.matrix(B)
     
-       for (s in 1:T)                             
-        { row=s+tau*T
+       for (s in 1:T_t)                             
+        { row=s+tau*T_t
            for (j in 1:p)                      
             {i1=s-j
              i2=s-tau
               if (i1 >= i2)                    
-                {good1=matlab::mod(i1-1,T)+1    
+                {good1=matlab::mod(i1-1,T_t)+1    
                 nT=good1-i1                     
                 good2=i2+nT                     
                 idiff=good1-good2
-                col=good1+T*idiff
+                col=good1+T_t*idiff
                 B[row,col]=phi[s,j]            
                 }
              }
@@ -72,33 +72,33 @@ function(theta,phi,nlen){
   
 
       if (tau > (ncol(theta)-1) )                    
-        {Rnew=B%*%c(Rold,matrix(0,T,1))    
+        {Rnew=B%*%c(Rold,matrix(0,T_t,1))    
          }  else  {
         Rnew=B%*%c(Rold,theta[,tau+1])
         }
     
-        B_x_xi[,tau+1]=Rnew[(tau*T+1):((tau+1)*T)]
+        B_x_xi[,tau+1]=Rnew[(tau*T_t+1):((tau+1)*T_t)]
         Rold=Rnew                                                
         }
 }
 
        Yvec<-matrix(0,side,1)
             minlen=q+1
-       for (t in 1:T) {Yvec[t,1]=theta[t,1:minlen]%*%B_x_xi[t,1:minlen]}
+       for (t in 1:T_t) {Yvec[t,1]=theta[t,1:minlen]%*%B_x_xi[t,1:minlen]}
 
        for (tau in 1:q)                                 
-          { for (s in 1:T)                               
-          {row=s+tau*T
+          { for (s in 1:T_t)                               
+          {row=s+tau*T_t
            rhs=0
             for (j in 1:minlen)                    
             {i1=s-tau
              i2=s-j+1                            
               if (i1 >= i2)                       
-                {good1=matlab::mod(i1-1,T)+1      
+                {good1=matlab::mod(i1-1,T_t)+1      
                  nT=good1-i1                      
                  good2=i2+nT                     
                  idiff=good1-good2
-                 col=good1+T*idiff
+                 col=good1+T_t*idiff
                  rhs=rhs+theta[s,j]%*%B_x_xi[good1,idiff+1]}
            }
         Yvec[row]=rhs
@@ -107,9 +107,9 @@ function(theta,phi,nlen){
 
      gamma=qr.solve(A)%*%Yvec
 
-      B<-matrix(0,T,lag+1)
-      B[,1]=gamma[1:T]
-        for (tau in 1:lag) {B[,tau+1]=gamma[(tau*T+1):((tau+1)*T)]}
+      B<-matrix(0,T_t,lag+1)
+      B[,1]=gamma[1:T_t]
+        for (tau in 1:lag) {B[,tau+1]=gamma[(tau*T_t+1):((tau+1)*T_t)]}
                                                 
         diags<-list(B[,1])
         R_1 = Matrix::bandSparse(length(B[,1]), k = 0, diag = diags)
@@ -117,7 +117,7 @@ function(theta,phi,nlen){
 
                                                 
       for (tau in 1:lag)
-        { diags<-list(B[1:(T-tau),(tau+1)])
+        { diags<-list(B[1:(T_t-tau),(tau+1)])
           MR_1=Matrix::bandSparse(nrow(R_1), k = tau, diag = diags)
           MR_1=as.matrix(MR_1)
           NR_1=Matrix::bandSparse(nrow(R_1), k = -tau, diag = diags)
@@ -137,7 +137,7 @@ function(theta,phi,nlen){
             { i1=t
               i2=ss-k+1                                      
               if (i1>=i2)                                    
-               { good1=matlab::mod(i1-1,T)+1                
+               { good1=matlab::mod(i1-1,T_t)+1                
                 nT=good1-i1                                 
                 good2=i2+nT                                 
                 idiff=good1-good2

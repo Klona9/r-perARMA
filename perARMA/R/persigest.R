@@ -1,15 +1,15 @@
-persigest<-function (x, T, alpha, missval, datastr, ...)
+persigest<-function (x, T_t, alpha, missval, datastr, ...)
 {
-    persigest_full <- function(x, T, alpha, missval, datastr,
+    persigest_full <- function(x, T_t, alpha, missval, datastr,
         typeci, typepstd, pchci, pchpstd, colci, colpstd, pp) {
         nx = length(x)
         xind = seq(1, nx)
-        nper = floor(nx/T)
-        nxact = nper * T
+        nper = floor(nx/T_t)
+        nxact = nper * T_t
         nrem = nx - nxact
         if (!is.nan(datastr)) {
-            cat(paste("found ", nper, " periods of length ",
-                T, " with remainder of ", nrem, "\n"))
+            message(paste("found ", nper, " periods of length ",
+                T_t, " with remainder of ", nrem, "\n"))
         }
         if (is.nan(missval)) {
             missisnan = 1
@@ -22,15 +22,15 @@ persigest<-function (x, T, alpha, missval, datastr, ...)
         nmissx = length(imissx)
         pmean1 <- matrix(0, nx, 1)
         pstd1 <- matrix(0, nx, 1)
-        pmean <- matrix(0, T, 1)
-        pstd <- matrix(0, T, 1)
-        ny <- matrix(0, T, 1)
-        psci <- matrix(0, T, 2)
+        pmean <- matrix(0, T_t, 1)
+        pstd <- matrix(0, T_t, 1)
+        ny <- matrix(0, T_t, 1)
+        psci <- matrix(0, T_t, 2)
         X <- matrix()
 
         vimiss<-c()
-        for (i in 1:T) {
-            index = seq(i, nx, T)
+        for (i in 1:T_t) {
+            index = seq(i, nx, T_t)
             z = x[index]
             if (missisnan) {
                 igood = which(!is.nan(z))
@@ -60,8 +60,8 @@ persigest<-function (x, T, alpha, missval, datastr, ...)
          if (pp)
          {  detail <- matrix(c(ny,vimiss,pstd,psci[,1], psci[,2]),ncol=5)
             colnames(detail) <- c(" ngood", "nmiss"," pstd ", "lower", "upper")
-            row.names(detail)<-paste("i=",seq(1,T), sep="")
-            print(detail) }
+            row.names(detail)<-paste("i=",seq(1,T_t), sep="")
+            message(detail) }
 
         htest <- bartlett.test(b)
         pspv <- htest[3]
@@ -84,7 +84,7 @@ persigest<-function (x, T, alpha, missval, datastr, ...)
     }
     L <- modifyList(list(typeci = "o", typepstd = "b", pchci = 10,
         pchpstd = 15, colci = "red", colpstd = "blue", pp = 1),
-        list(x = x, T = T, alpha = alpha, missval = missval,
+        list(x = x, T_t = T_t, alpha = alpha, missval = missval,
             datastr = datastr, ...))
     do.call(persigest_full, L)
 }

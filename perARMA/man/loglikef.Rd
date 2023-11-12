@@ -29,7 +29,7 @@ input time series.
 }
  \item{conpars}{
 vector of parameters \code{[T,p,q,naf,nbf,del_mask,iaf,ibf,stype]}:\cr
- \code{T} period of PC-T structure,\cr
+ \code{T_t} period of PC-T structure,\cr
  \code{p, q} maximum PAR and PMA order, respectively,\cr
  \code{naf, nbf} total active coefficients in \code{a} and \code{b}, respectively,\cr
  \code{del_mask} vector of length \code{T} (it will be used in the future, so far the user should set \code{del_mask=matrix(1,T,1)}),\cr

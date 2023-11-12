@@ -12,7 +12,7 @@ possible pair of \eqn{ t} and \eqn{\tau } confidence limits for
 provides also two important tests: \eqn{ \rho(t+\tau,t) \equiv \rho(\tau)} and \eqn{\rho(t+\tau,t) \equiv 0}.
 }
 \usage{
-peracf(x, T, tau, missval, datastr,...)
+peracf(x, T_t, tau, missval, datastr,...)
 }
 \arguments{
   \item{x}{
@@ -20,7 +20,7 @@ input time series, at the begining missing values
 in \code{x} will be treat as zeros and periodic mean will be computed,
 then missing values will be replaced by periodic mean.
 }
-  \item{T}{
+  \item{T_t}{
 period of PC-T structure.
 }
   \item{tau}{

@@ -13,13 +13,13 @@ This procedure could be applied to the original time series \code{x}  or to the 
  to characterize the goodness of fit.
 }
 \usage{
-parma_ident(x, T, missval, datastr, ...)
+parma_ident(x, T_t, missval, datastr, ...)
 }
 \arguments{
   \item{x}{
 input time series.
 }
-  \item{T}{
+  \item{T_t}{
 period of PC-T structure.
 }
   \item{missval}{

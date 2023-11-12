@@ -2,35 +2,35 @@ loglikec <-
 function (ptvec,x,conpars) {
 
       ZTHRS=10*.Machine$double.eps
-      T=conpars[1]
+      T_t=conpars[1]
       p=conpars[2]
       q=conpars[3]
       stype=conpars[4]
       nx=length(x)
 
-       phi<-matrix(0,T,p)
-       del<-matrix(0,T,1)
-       theta<-matrix(0,T,q)
+       phi<-matrix(0,T_t,p)
+       del<-matrix(0,T_t,1)
+       theta<-matrix(0,T_t,q)
 
     if (p>0)
-         {philin=ptvec[1:(p*T)]
-          phi=matrix(philin,T,p) }
+         {philin=ptvec[1:(p*T_t)]
+          phi=matrix(philin,T_t,p) }
 
-       del=ptvec[(p*T+1):((p+1)*T)]
+       del=ptvec[(p*T_t+1):((p+1)*T_t)]
        del=as.matrix(del)
 
     if (q>0)
-         {philin=ptvec[((p+1)*T+1):((p+1+q)*T)]
-          theta=matrix(philin,T,q) }
+         {philin=ptvec[((p+1)*T_t+1):((p+1+q)*T_t)]
+          theta=matrix(philin,T_t,q) }
 
     m=max(p,q)
 
         if(p) {
-        a=cbind(matrix(1,T,1),-phi)
+        a=cbind(matrix(1,T_t,1),-phi)
         }  else {
-        a=matrix(1,T,1)
+        a=matrix(1,T_t,1)
         }
-         b=matrix(1,T,1)
+         b=matrix(1,T_t,1)
          pf<-parmafil(a,b,x)
          w0<-pf$y
 

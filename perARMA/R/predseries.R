@@ -1,19 +1,19 @@
-predseries <-function(real,x,T,p,start,...)
+predseries <-function(real,x,T_t,p,start,...)
 {
- predseries_full<-function(real,x,T,p,start,missval,predcol,realcol){
+ predseries_full<-function(real,x,T_t,p,start,missval,predcol,realcol){
 
-pm<-permest(x,T, 0.05, missval,'series', pp=0)
+pm<-permest(x,T_t, 0.05, missval,'series', pp=0)
 pmean=pm$pmean
 xd=pm$xd
 n=length(xd)
-pred<-predictperYW(xd,T,p,missval, start, predcol, realcol)
+pred<-predictperYW(xd,T_t,p,missval, start, predcol, realcol)
 xp=pred$x
 
 xpm<-matrix(0,start,1)
 for(i in 1:start){
-if (i%%T==0) {xpm[i]=xp[i]+pmean[T]
+if (i%%T_t==0) {xpm[i]=xp[i]+pmean[T_t]
               } else {
-             xpm[i]=xp[i]+pmean[i%%T]}
+             xpm[i]=xp[i]+pmean[i%%T_t]}
              }
 
 plot (xpm[n:start], xlab="time",ylab= "values of the series", type="l", lwd=1, lty=1,col=predcol)
@@ -23,7 +23,7 @@ title(main="Prediction of the series vs. real data",
 legend("bottomright", c("real series","predicted series"), fill=c(realcol,predcol),ncol=2,title="legend")
 }
 
-L<-modifyList(list(missval=NaN,predcol="red",realcol="blue"), list(real=real,x = x, T=T, p=p,start=start,...))
+L<-modifyList(list(missval=NaN,predcol="red",realcol="blue"), list(real=real,x = x, T_t=T_t, p=p,start=start,...))
 
  do.call(predseries_full,L)
 

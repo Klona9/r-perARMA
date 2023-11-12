@@ -45,7 +45,7 @@ By default they are fixed to \code{np1 = 5}, \code{np2 = fftlen/2}, \code{halfle
 }
 }
 \details{
-When we assume that period \code{T} of PC-T structure is unknown, 
+When we assume that period \code{T_t} of PC-T structure is unknown, 
 function \code{pgram} enables us to find
 candidate for the period length assuming the period of 
 the second order structure is the same as the period of 
@@ -54,7 +54,7 @@ the first order structure (IE, in the series itself).
 \value{
 For any FFT index \eqn{j} (say where a strong peak occurs)
 \eqn{j} corresponds to the number of cycles in the FFT window, 
-so the period can be easily computed as \code{T = fftlen/j}.
+so the period can be easily computed as \code{T_t = fftlen/j}.
 }
 \references{
 Box, G. E. P., Jenkins, G. M., Reinsel, G. (1994), Time Series Analysis, 3rd Ed., Prentice-Hall,

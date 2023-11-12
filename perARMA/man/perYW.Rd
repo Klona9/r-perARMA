@@ -13,13 +13,13 @@ for all seasons. For input time series \code{x}, matrix of parameters
 \code{del} are computed.
 }
 \usage{
-perYW(x, T, p, missval)
+perYW(x, T_t, p, missval)
 }
 \arguments{
   \item{x}{
 input time series.
 }
-  \item{T}{
+  \item{T_t}{
 period of PC-T structure (assumed constant over time).
 }
   \item{p}{

@@ -13,13 +13,13 @@ First, the periodic mean is computed using the method of \code{permest}. If at t
  deviation is set to \code{"Missing"} and in the output vector \code{xn} all the values whose times are congruent with \code{(t mod T)} will be set to \code{"Missing"}.
 }
 \usage{
-persigest(x, T, alpha, missval, datastr,...)
+persigest(x, T_t, alpha, missval, datastr,...)
 }
 \arguments{
   \item{x}{
 input time series.
 }
-  \item{T}{
+  \item{T_t}{
 period of the computed standard deviation.
 }
   \item{alpha}{

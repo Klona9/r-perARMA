@@ -15,14 +15,14 @@ observed data in \code{x}.\cr
 available).
 }
 \usage{
-predictperYW(x, T, p, missval, start,...)
-predseries(real, x, T, p, start,...)
+predictperYW(x, T_t, p, missval, start,...)
+predseries(real, x, T_t, p, start,...)
 }
 \arguments{
   \item{x}{
 input time series.
 }
-  \item{T}{
+  \item{T_t}{
 period of PC-T structure.
 }
   \item{p}{

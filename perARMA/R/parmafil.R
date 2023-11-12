@@ -18,14 +18,14 @@ function(b,a,x){
                 {for (j in 1:na)                      
                      { a[,j]=a[,j]/a[,1]}             
                 }
-        T=Ta
+        T_t=Ta
         xpad=c(matrix(0,nb-1,1),x)                                          
         yold=matrix(0,na-1,1)      
         ntimes=nrx                     
         y=999*matrix(1,nrx,1)
 
        for (i in 1:ntimes)
-           {index=matlab::mod((i-1),T)+1
+           {index=matlab::mod((i-1),T_t)+1
              xtmp=matlab::flipud(xpad[i:(i+nb-1)])
              xma=b[index,]%*%xtmp  
 

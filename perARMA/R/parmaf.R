@@ -1,12 +1,12 @@
 parmaf <-
-function(x,T,p,q,af,bf,...)
+function(x,T_t,p,q,af,bf,...)
 {
-  parmaf_full<-function(x,T,p,q,af,bf,a0,b0,stype)
+  parmaf_full<-function(x,T_t,p,q,af,bf,a0,b0,stype)
     {  
            if (!is.null(b0))  
            { del_mask=as.numeric(b0[,1]!=0)
             } else {
-             del_mask=matrix(1,T,1)
+             del_mask=matrix(1,T_t,1)
             }
 
            if ( q != (ncol(bf)-1) ) { stop("number of columns of bf not equal to q+1")}
@@ -22,7 +22,7 @@ function(x,T,p,q,af,bf,...)
           if (nargs() < 7 | is.null(a0) | is.null(b0) )            
           {  
            if (p)  
-           { estimators<-perYW(x,T,p,NaN)
+           { estimators<-perYW(x,T_t,p,NaN)
              phi0=estimators$phi
              del0=estimators$del
              phi0=as.matrix(phi0)
@@ -37,10 +37,10 @@ function(x,T,p,q,af,bf,...)
              b1=as.matrix(b1)
 
              a00<-matrix()
-             for (i in 1:p)  {a00[seq(1,T)+(i-1)*T]=a0[,i]} 
+             for (i in 1:p)  {a00[seq(1,T_t)+(i-1)*T_t]=a0[,i]} 
               } else {
              phi0<-matrix()
-             del0=matrix(1,T,1)
+             del0=matrix(1,T_t,1)
 
              phthb<-phth2ab(del0)
              b1=phthb$a
@@ -49,14 +49,14 @@ function(x,T,p,q,af,bf,...)
             }
           }
 
-             b0=cbind(b1,matrix(0,T,q))
+             b0=cbind(b1,matrix(0,T_t,q))
            
 
         if ( length(which(a00!=0)))
         {  
 
            if (p)
-           {  estimators<-perYW(x,T,p,NaN)
+           {  estimators<-perYW(x,T_t,p,NaN)
               phi0=estimators$phi
               del0=estimators$del
               phi0=as.matrix(phi0)
@@ -72,15 +72,15 @@ function(x,T,p,q,af,bf,...)
               b1=phthb$a
               b1=as.matrix(b1)
 
-              b0=cbind(b1,matrix(0,T,q))
+              b0=cbind(b1,matrix(0,T_t,q))
 
              a00<-matrix()
-             for (i in 1:p) { a00[seq(1,T)+(i-1)*T]=a0[,i]}  
+             for (i in 1:p) { a00[seq(1,T_t)+(i-1)*T_t]=a0[,i]}  
              a00=a00[iaf]
 
                 } else {
-              phi0=matrix(0,T,1) 
-              del0=matrix(1,T,1) 
+              phi0=matrix(0,T_t,1) 
+              del0=matrix(1,T_t,1) 
 
                del0=del0*del_mask
 
@@ -88,17 +88,17 @@ function(x,T,p,q,af,bf,...)
               b1=phthb$a
               b1=as.matrix(b1)
 
-              b0=cbind(b1,matrix(0,T,q))
+              b0=cbind(b1,matrix(0,T_t,q))
               }
               b00<-matrix()
-              for (i in 1:(q+1)) { b00[seq(1,T)+(i-1)*T]=b0[,i]}
+              for (i in 1:(q+1)) { b00[seq(1,T_t)+(i-1)*T_t]=b0[,i]}
                 b00=b00[ibf]
 
               ab0=c(a00,b00)
            }  else {
              
               b00<-matrix()
-              for (i in 1:(q+1)) { b00[seq(1,T)+(i-1)*T]=b0[,i]}
+              for (i in 1:(q+1)) { b00[seq(1,T_t)+(i-1)*T_t]=b0[,i]}
                 b00=b00[ibf]
 
               ab0=c(b00)
@@ -106,7 +106,7 @@ function(x,T,p,q,af,bf,...)
           }
       
 
-  conpars=c(T,p,q,naf,nbf,del_mask,iaf,ibf,stype)
+  conpars=c(T_t,p,q,naf,nbf,del_mask,iaf,ibf,stype)
 
    fun<-function(ab) 
    { val<-loglikef(ab,x,conpars)
@@ -122,7 +122,7 @@ function(x,T,p,q,af,bf,...)
          
         endab=length(ab)
         if (p)
-          { a<-matrix(0,T,p)
+          { a<-matrix(0,T_t,p)
             a[iaf]=ab[1:naf]
 
             ab2p<-ab2phth(a)
@@ -133,11 +133,11 @@ function(x,T,p,q,af,bf,...)
             a<-matrix()
             phi<-matrix() }
  
-          b<-matrix(0,T,q+1) 
+          b<-matrix(0,T_t,q+1) 
           b[ibf]=ab[(naf+1):endab]
 
 
-          b1<-matrix(0,T,1)
+          b1<-matrix(0,T_t,1)
           b1=b[,1]
 
           ab2pb1<-ab2phth(b1)
@@ -147,7 +147,7 @@ function(x,T,p,q,af,bf,...)
 
 
          if (q)
-          { b2<-matrix(0,T,q)
+          { b2<-matrix(0,T_t,q)
             b2=b[,2:(q+1)]
             ab2ptheta<-ab2phth(b2)
             theta=ab2ptheta$phi
@@ -177,7 +177,7 @@ function(x,T,p,q,af,bf,...)
       result
      }
 
-    L<-modifyList(list(a0=NULL,b0=NULL, stype=0),list(x = x, T=T, p=p,q=q, af=af, bf=bf,...))
+    L<-modifyList(list(a0=NULL,b0=NULL, stype=0),list(x = x, T_t=T_t, p=p,q=q, af=af, bf=bf,...))
     do.call(parmaf_full,L)
 
 }

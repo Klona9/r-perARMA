@@ -1,9 +1,9 @@
 perYW <-
-function(x,T,p,missval) {
+function(x,T_t,p,missval) {
 
   CTHRES=1e+6
   nx=length(x)
-  pmean=matrix(0,T,1)
+  pmean=matrix(0,T_t,1)
   pmean1=matrix(0,nx,1)
 
   ralpha<-matrix(p,1)
@@ -17,8 +17,8 @@ function(x,T,p,missval) {
 
           nmissx=length(imissx)
 
-         for (i in 1:T)
-          {  index=seq(i,nx,T)
+         for (i in 1:T_t)
+          {  index=seq(i,nx,T_t)
                z=x[index]                
           if (missisnan)  
             { igood=which(!is.nan(z))    
@@ -38,25 +38,25 @@ function(x,T,p,missval) {
 
 
       r<-matrix(0,p,1) 
-      phi<-matrix(0,T,p)
-      del<-matrix(0,T,1)
-      C=matrix(0,T)
-      nsamp=matrix(0,T)
+      phi<-matrix(0,T_t,p)
+      del<-matrix(0,T_t,1)
+      C=matrix(0,T_t)
+      nsamp=matrix(0,T_t)
 
-      for (t in 1:T)
+      for (t in 1:T_t)
     { baseind=seq(t,t-p,-1) 
       while (min(baseind) <= 0)         
-            {baseind=baseind+T} 
+            {baseind=baseind+T_t} 
        
-        inum=floor((nx-baseind)/T)+1 
+        inum=floor((nx-baseind)/T_t)+1 
         inummin=min(inum)
-        yt=t(xd[seq(baseind[1],nx,T)])       
+        yt=t(xd[seq(baseind[1],nx,T_t)])       
         yt=(yt[1:inummin]) 
        
        y<-matrix(0,inummin,p)
 
       for (s in 1:p)
-      { isamp=seq(baseind[s+1],nx,T)
+      { isamp=seq(baseind[s+1],nx,T_t)
         isamp=isamp[1:inummin]
         y[,s]=t(xd[isamp])
         ralpha[s]=sum(yt%*%y[,s]/(inummin),na.rm = TRUE)   

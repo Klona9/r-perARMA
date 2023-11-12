@@ -64,7 +64,7 @@ stop=stop+fftlen
       imax<-match(max(frat), frat)   
       xtpv=1-pf(fmax,2*nav,2*nav*numgood)
  
-      cat(paste('Most significant periodogram bin ',imax-1,' P-value : ',xtpv,'\n'))     
+      message(paste('Most significant periodogram bin ',imax-1,' P-value : ',xtpv,'\n'))     
 
 }
  

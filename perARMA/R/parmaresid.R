@@ -22,16 +22,16 @@ function(x,stype,del,phi,...)
       DISPRANK=1
 
       nx=length(x)
-      T=length(del)
+      T_t=length(del)
      
       m=max(p,q)  
 
       if (p)
-      {A=cbind(matrix(1,T,1),-phi)
+      {A=cbind(matrix(1,T_t,1),-phi)
        } else {
-       A=matrix(1,T,1)}
+       A=matrix(1,T_t,1)}
   
-       B=matrix(1,T,1)
+       B=matrix(1,T_t,1)
 
        m=max(p,q)
          

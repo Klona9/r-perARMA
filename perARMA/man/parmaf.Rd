@@ -8,13 +8,13 @@ Procedure \code{parmaf} enables the estimation of parameters of the chosen repre
 optimization methods to obtain minimum of negative logarithm of likelihood function using \code{loglikef} procedure. Intitial values of parameters are computed using Yule-Walker equations.
 }
 \usage{
-parmaf(x, T, p, q, af, bf, ...)
+parmaf(x, T_t, p, q, af, bf, ...)
 }
 \arguments{
   \item{x}{
 input time series.
 }
-  \item{T}{
+  \item{T_t}{
 period length of PC-T structure.
 }
   \item{p}{
@@ -110,37 +110,36 @@ y=makeparma_out$y
 ## Do not run 
 ## It could take more than one minute
 
+\donttest{
 ############ fitting of PARMA(0,1) model
-#p=0
-#q=1
-#af=matrix(0,T,p)
-#bf=matrix(0,T,q+1)
-#bf[1,1]=1
-#bf[1:3,2]=1
+p=0
+q=1
+af=matrix(0,T,p)
+bf=matrix(0,T,q+1)
+bf[1,1]=1
+bf[1:3,2]=1
 
-#parmaf(y,T,p,q,af,bf)
+parmaf(y,T,p,q,af,bf)
 
-############ fitting of PARMA(2,0) model
-#p=2
-#q=0
-#af=matrix(0,T,p)
-#bf=matrix(0,T,q+1)
-#af[1:3,1]=1       
-#af[1:3,2]=1
-#bf[1,1]=1
-
-#parmaf(y,T,p,q,af,bf)
-
+########### fitting of PARMA(2,0) model
+p=2
+q=0
+af=matrix(0,T,p)
+bf=matrix(0,T,q+1)
+af[1:3,1]=1       
+af[1:3,2]=1
+bf[1,1]=1
+parmaf(y,T,p,q,af,bf)
 ############ fitting of PARMA(2,1) model
-#p=2
-#q=1
-#af=matrix(0,T,p)
-#bf=matrix(0,T,q+1)
-#af[1:3,1]=1       
-#af[1:3,2]=1
-#bf[1,1]=1
-#bf[1:3,2]=1
-
-#parmaf(y,T,p,q,af,bf)
+p=2
+q=1
+af=matrix(0,T,p)
+bf=matrix(0,T,q+1)
+af[1:3,1]=1       
+af[1:3,2]=1
+bf[1,1]=1
+bf[1:3,2]=1
+parmaf(y,T,p,q,af,bf)
+}
 }
 

@@ -13,13 +13,13 @@ season \code{(t mod T)}). Otherwise the periodic mean at \code{(t mod T)} will b
 \code{xr} and \code{xd} all the values whose times are congruent with \code{(t mod T)} will be set to \code{"Missing"}.
 }
 \usage{
-permest(x, T, alpha, missval, datastr,...)
+permest(x, T_t, alpha, missval, datastr,...)
 }
 \arguments{
   \item{x}{
 input time series.
 }
-  \item{T}{
+  \item{T_t}{
 period of the computed mean.
 }
   \item{alpha}{

@@ -3,28 +3,28 @@ function(ab,x,conpars)
 {   
       ZTHRS=10*.Machine$double.eps
       DISPRANK=0
-      T=as.numeric(conpars[1])
+      T_t=as.numeric(conpars[1])
       p=as.numeric(conpars[2])
       q=as.numeric(conpars[3])
       naf=conpars[4]
       nbf=conpars[5]
-      del_mask=conpars[6:(6+T-1)]
-      iaf=conpars[(6+T):(6+T-1+naf)]
+      del_mask=conpars[6:(6+T_t-1)]
+      iaf=conpars[(6+T_t):(6+T_t-1+naf)]
       end=length(conpars)
-      ibf=conpars[(6+T-1+naf+1):(end-1)]
+      ibf=conpars[(6+T_t-1+naf+1):(end-1)]
       stype=conpars[end]
 
       nx=length(x)
 
      if (p>0)
-       {  a=matrix(0,T,p)
+       {  a=matrix(0,T_t,p)
           a[iaf]=ab[1:naf]
           phiab<-ab2phth(a)
           phi=phiab$phi
            } else {
           phi<-matrix()  }
  
-        b=matrix(0,T,q+1)
+        b=matrix(0,T_t,q+1)
         end=length(ab)
         
        b[ibf]=ab[(naf+1):end]
@@ -45,11 +45,11 @@ function(ab,x,conpars)
         m=max(p,q)
 
      if(p) {
-      A=cbind(matrix(1,T,1),-phi)
+      A=cbind(matrix(1,T_t,1),-phi)
        }  else {
-      A=matrix(1,T,1)
+      A=matrix(1,T_t,1)
        }
-     B=matrix(1,T,1)      
+     B=matrix(1,T_t,1)      
      x=as.matrix(x)   
             
          pf<-parmafil(A,B,x)

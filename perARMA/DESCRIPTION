@@ -23,9 +23,10 @@ Description: Identification, model fitting and estimation for time series with p
     Vecchia, A. (1985) <doi:10.1111/j.1752-1688.1985.tb00167.x>
     Jones, R., Brelsford, W. (1967) <doi:10.1093/biomet/54.3-4.403>
     Makagon, A. (1999)
-    <https:https://www.math.uni.wroc.pl/~pms/files/19.2/Article/19.2.5.pdf>
+    <https://www.math.uni.wroc.pl/~pms/files/19.2/Article/19.2.5.pdf>
     Sakai, H. (1989) <doi:10.1111/j.1467-9892.1991.tb00069.x>
-    Gladyshev, E. G. (1961) <doi:https:10.1016/j.jmva.2004.04.010>
+    Gladyshev, E. G. (1961) 
+    <https://www.mathnet.ru/php/archive.phtml?wshow=paper&jrnid=dan&paperid=24851>
     Ansley (1979) <doi:10.1093/biomet/66.1.59>
     Hurd, H. L., Gerr, N. L. (1991) <doi:10.1111/j.1467-9892.1991.tb00088.x>.
 License: GPL (>= 2.0)

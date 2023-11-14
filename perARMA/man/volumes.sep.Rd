@@ -22,5 +22,5 @@ selecting \code{Elspot volumes} and \code{hourly} resolution to download file \c
 }
 \examples{
 data(volumes.sep)
-plot(volumes.sep)
+message(volumes.sep)
 }

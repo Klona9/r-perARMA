@@ -28,7 +28,8 @@ function(ppf,nsamp,alpha,datastr){
 
 
      dev.set(which=1)
-     par(mfrow = c(4,ceiling(T_t/4)))
+     p_par = par(mfrow = c(4,ceiling(T_t/4)))
+     on.exit(par(p_par), add = TRUE)
      for (i in 1:T_t)
     { plot(seq(0,nc-1),ppf[i,], xlab="n = samples between ", t = "h", ylab=ylab.name,lwd=1, ylim=c(-1,1))
       abline(h = 0, col = "black")
